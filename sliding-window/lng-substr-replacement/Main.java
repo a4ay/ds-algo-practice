@@ -20,13 +20,13 @@ import java.util.Map.Entry;
  */
 public class Main {
 
-    /***
-     * Sliding Window
-     * @param str
-     * @param k
-     * @return
-     * Worst Case => O(N) time O(1) space;
-     */
+  /***
+   * Sliding Window
+   * @param str
+   * @param k
+   * @return
+   * Worst Case => O(N) time O(1) space;
+   */
   public static int findLength(String str, int k) {
     Map<Character, Integer> map = new HashMap<>();
     int start = 0, end = 0, longest = 0, replacedChar = 0;
@@ -70,8 +70,8 @@ public class Main {
     k = 1;
     System.out.println(findLength(str, k));
 
-    str="abccde";
-    k=1;
+    str = "abccde";
+    k = 1;
     System.out.println(findLength(str, k));
   }
 }
