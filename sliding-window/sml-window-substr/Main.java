@@ -24,13 +24,12 @@ import java.util.Map.Entry;
  */
 public class Main {
 
-  public static boolean hasPatChar(Map<Character, Integer> strFreq, Map<Character, Integer> patFreq) {
-    
     /***
      * Utility Method
      * Complexity Analysis: Max possible iter is 26 considering all alphabets in worst case
      * Hence: O(1) time and O(1) space
      */
+  public static boolean hasPatChar(Map<Character, Integer> strFreq, Map<Character, Integer> patFreq) {
     for(Entry<Character, Integer> entry: patFreq.entrySet()) {
         if(strFreq.getOrDefault(entry.getKey(), 0) < entry.getValue()) {
             return false;
@@ -49,46 +48,46 @@ public class Main {
    */
   public static String findSubstring(String str, String pattern) {
     int start = 0, end = 0, startIndex = 0, endIndex = Integer.MAX_VALUE;
-    Map<Character, Integer> patFreq = new HashMap<>();
-    Map<Character, Integer> strFreq = new HashMap<>();
-    StringBuffer result = new StringBuffer();
+        Map<Character, Integer> patFreq = new HashMap<>();
+        Map<Character, Integer> strFreq = new HashMap<>();
+        StringBuffer result = new StringBuffer();
 
-    for (int i = 0; i < pattern.length(); ++i) {
-      Character patChar = pattern.charAt(i);
-      patFreq.put(patChar, patFreq.getOrDefault(patChar, 0) + 1);
-    }
-
-    while (end < str.length()) {
-      Character endChar = str.charAt(end);
-
-      if (patFreq.containsKey(endChar)) {
-        strFreq.put(endChar, patFreq.getOrDefault(endChar, 0) + 1);
-      }
-
-      while (hasPatChar(strFreq, patFreq)) {
-        if (endIndex - startIndex > end - start) {
-          startIndex = start;
-          endIndex = end;
+        for (int i = 0; i < pattern.length(); ++i) {
+          Character patChar = pattern.charAt(i);
+          patFreq.put(patChar, patFreq.getOrDefault(patChar, 0) + 1);
         }
-        Character startChar = str.charAt(start);
-        if (patFreq.containsKey(startChar)) {
-          strFreq.put(startChar, strFreq.get(startChar) - 1);
-          if (strFreq.get(startChar) == 0) {
-            strFreq.remove(startChar);
+
+        while (end < str.length()) {
+          Character endChar = str.charAt(end);
+
+          if (patFreq.containsKey(endChar)) {
+            strFreq.put(endChar, strFreq.getOrDefault(endChar, 0) + 1);
           }
+
+          while (hasPatChar(strFreq, patFreq)) {
+            if (endIndex - startIndex > end - start) {
+              startIndex = start;
+              endIndex = end;
+            }
+            Character startChar = str.charAt(start);
+            if (patFreq.containsKey(startChar)) {
+              strFreq.put(startChar, strFreq.get(startChar) - 1);
+              if (strFreq.get(startChar) == 0) {
+                strFreq.remove(startChar);
+              }
+            }
+            ++start;
+          }
+
+          ++end;
         }
-        ++start;
-      }
+        if(endIndex - startIndex > str.length()) return "";
+        while (startIndex <= endIndex) {
+          result.append(str.charAt(startIndex));
+          ++startIndex;
+        }
 
-      ++end;
-    }
-    if(endIndex - startIndex > str.length()) return "";
-    while (startIndex <= endIndex) {
-      result.append(str.charAt(startIndex));
-      ++startIndex;
-    }
-
-    return result.toString();
+        return result.toString();
   }
 
   public static void main(String[] args) {
@@ -98,7 +97,7 @@ public class Main {
     str = "abdabca"; pattern = "abc";
     System.out.println(findSubstring(str, pattern));
 
-    str = "adcad"; pattern = "abc";
+    str = "ADOBECODEBANC"; pattern = "ABC";
     System.out.println(findSubstring(str, pattern));
   }
 }
