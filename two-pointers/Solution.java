@@ -18,6 +18,37 @@ import java.util.*;
  * 
  */
 class Solution {
+    /***
+     * Two pointer Method only works for already sorted array
+     * @param arr
+     * @param targetSum
+     * @return
+     * Complexity Analysis: O(N) time O(1) space;
+     */
+    public int[] search(int[] arr, int targetSum) {
+        int leftPtr = 0, rightPtr = arr.length - 1;
+
+        while(rightPtr < leftPtr) {
+            int sum = arr[leftPtr] + arr[rightPtr];
+            if(sum == targetSum) {
+                return new int[]{leftPtr, rightPtr};
+            } else if(sum < targetSum) {
+                leftPtr++;
+            } else {
+                rightPtr--;
+            }
+        }
+
+        return new int[]{};
+    }
+    /***
+     * Mapping complement technique
+     * Works for both ordered and unordered array set
+     * @param nums
+     * @param target
+     * @return
+     * Complexity Analysis: O(N) time O(N) space
+     */
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> com = new HashMap<>();
         for(int i = 0; i < nums.length; ++i) {
